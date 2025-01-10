@@ -14,6 +14,21 @@ class User(db.Model, UserMixin):
     item = db.relationship('Item', backref='owned_user', lazy=True)
 
     @property
+    def prettier_budget(self):
+        s = str(self.budget)
+        count = 0
+        result = ''
+        for i in range(len(s)-1, -1, -1):  
+            if count == 3:
+                result += ','  
+                count = 0
+            result += s[i]
+            count += 1
+
+        result = result[::-1]
+        return '$'+result
+
+    @property
     def password(self):
         return self.password
     
